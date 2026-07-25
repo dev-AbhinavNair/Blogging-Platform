@@ -59,15 +59,15 @@ const requestOTP = async (req, res) => {
     user.otpExpires = Date.now() + 10 * 60 * 1000;
     await user.save();
 
-    await sendEmail({
+    console.log(`OTP for ${normalizedEmail}: ${otp}`);
+
+    res.status(200).json({ message: "OTP sent to your email" });
+
+    sendEmail({
       to: user.email,
       subject: "Your Login OTP",
       text: `Your OTP for login is: ${otp}. It is valid for 10 minutes.`,
     }).catch((err) => console.error("Email send failed:", err));
-
-    console.log(`OTP for ${normalizedEmail}: ${otp}`);
-
-    res.status(200).json({ message: "OTP sent to your email" });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
