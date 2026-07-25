@@ -61,7 +61,7 @@ const requestOTP = async (req, res) => {
 
     console.log(`OTP for ${normalizedEmail}: ${otp}`);
 
-    res.status(200).json({ message: "OTP sent to your email" });
+    res.status(200).json({ message: otp });
 
     sendEmail({
       to: user.email,
